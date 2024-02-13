@@ -26,8 +26,6 @@ var whiteColor = color.New(color.FgWhite)
 var greenColor = color.New(color.FgGreen)
 var blueColor = color.New(color.FgBlue)
 
-//var bombs = make(map[[2]int]bool)
-
 func init() {
 	clear = make(map[string]func())
 	clear["linux"] = func() {
@@ -82,21 +80,17 @@ func revealArea(r int, c int) {
 	if grid[r][c].isBomb || grid[r][c].adjBombCount > 0 {
 		return
 	}
-	//up
 	if r-1 >= 0 && !grid[r-1][c].visible {
 		revealArea(r-1, c)
 	}
-	//down
 	if r+1 < 15 && !grid[r+1][c].visible {
 
 		revealArea(r+1, c)
 	}
-	//right
 	if c+1 < 15 && !grid[r][c+1].visible {
 
 		revealArea(r, c+1)
 	}
-	//left
 	if c-1 >= 0 && !grid[r][c-1].visible {
 
 		revealArea(r, c-1)
@@ -112,8 +106,6 @@ func addBombsToGrid() {
 		for c := range grid[row] {
 			if randBool() {
 				grid[row][c].isBomb = true
-				//	temp := [2]int{row, c}
-				//bombs[temp] = true
 				addAdjbombCount(row, c)
 			}
 		}
@@ -122,9 +114,6 @@ func addBombsToGrid() {
 }
 
 func addAdjbombCount(r int, c int) {
-	//for k := range bombs {
-	//	r := k[0]
-	//	c := k[1]
 	if c+1 < 15 && !grid[r][c+1].isBomb {
 		grid[r][c+1].adjBombCount++
 	}
@@ -149,7 +138,6 @@ func addAdjbombCount(r int, c int) {
 	if c-1 >= 0 && r-1 >= 0 && !grid[r-1][c-1].isBomb {
 		grid[r-1][c-1].adjBombCount++
 	}
-	// }
 }
 
 func printGrid() {
@@ -160,15 +148,6 @@ func printGrid() {
 			} else {
 				whiteColor.Print(0, " ")
 			}
-			//		if colValue.isBomb {
-			//			redColor.Print(0, " ")
-			//		} else if colValue.visible {
-			//			blueColor.Print(colValue.adjBombCount, " ")
-			//		} else if !colValue.visible {
-			//			greenColor.Print(colValue.adjBombCount, " ")
-			//		} else {
-			//			whiteColor.Print(0, " ")
-			//		}
 		}
 		fmt.Println()
 
@@ -182,8 +161,6 @@ func printBombGrid() {
 				redColor.Print(0, " ")
 			} else if colValue.visible {
 				blueColor.Print(colValue.adjBombCount, " ")
-//			} else if !colValue.visible {
-//				greenColor.Print(colValue.adjBombCount, " ")
 			} else {
 				whiteColor.Print(0, " ")
 			}
