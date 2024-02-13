@@ -1,6 +1,6 @@
 # Minesweeper Game
 
-The provided code implements a simple version of the classic Minesweeper game using Go programming language. The game is played in the terminal/console environment. Players reveal cells on a grid, trying to avoid hidden mines while uncovering safe areas.
+This project implements a simple version of the classic Minesweeper game using Go programming language. The game is played in the terminal/console environment. Players reveal cells on a grid, trying to avoid hidden mines while uncovering safe areas.
 
 ## Features
 
