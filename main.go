@@ -64,8 +64,11 @@ func main() {
 			revealArea(input1, input2)
 			CallClear()
 		} else {
-			redColor.Println("GAME OVER")
 			gameOver = true
+			CallClear()
+			printBombGrid()
+			redColor.Println("GAME OVER")
+
 		}
 
 		if !gameOver {
@@ -152,21 +155,35 @@ func addAdjbombCount(r int, c int) {
 func printGrid() {
 	for row := range grid {
 		for _, colValue := range grid[row] {
-			//			if colValue.visible {
-			//				if colValue.adjBombCount > 0 {
-			//					greenColor.Print(colValue.adjBombCount, " ")
-			//				} else {
-			//					whiteColor.Print(0, " ")
-			//				}
-			//			} else {
-			//				whiteColor.Print(0, " ")
-			//			}
+			if colValue.visible {
+				blueColor.Print(colValue.adjBombCount, " ")
+			} else {
+				whiteColor.Print(0, " ")
+			}
+			//		if colValue.isBomb {
+			//			redColor.Print(0, " ")
+			//		} else if colValue.visible {
+			//			blueColor.Print(colValue.adjBombCount, " ")
+			//		} else if !colValue.visible {
+			//			greenColor.Print(colValue.adjBombCount, " ")
+			//		} else {
+			//			whiteColor.Print(0, " ")
+			//		}
+		}
+		fmt.Println()
+
+	}
+}
+
+func printBombGrid() {
+	for row := range grid {
+		for _, colValue := range grid[row] {
 			if colValue.isBomb {
 				redColor.Print(0, " ")
 			} else if colValue.visible {
 				blueColor.Print(colValue.adjBombCount, " ")
-			} else if !colValue.visible {
-				greenColor.Print(colValue.adjBombCount, " ")
+//			} else if !colValue.visible {
+//				greenColor.Print(colValue.adjBombCount, " ")
 			} else {
 				whiteColor.Print(0, " ")
 			}
@@ -174,4 +191,5 @@ func printGrid() {
 		fmt.Println()
 
 	}
+
 }
