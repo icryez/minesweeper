@@ -1,0 +1,1 @@
+1. Add chance in randBool func to increase of decrease the probability of mines generating.
