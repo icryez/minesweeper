@@ -24,6 +24,7 @@ var clear map[string]func()
 var redColor = color.New(color.FgRed)
 var whiteColor = color.New(color.FgWhite)
 var greenColor = color.New(color.FgGreen)
+var blueColor = color.New(color.FgBlue)
 
 //var bombs = make(map[[2]int]bool)
 
@@ -59,7 +60,7 @@ func main() {
 	for !gameOver {
 		fmt.Scan(&input1)
 		fmt.Scan(&input2)
-		if !grid[input1][input2].isBomb{
+		if !grid[input1][input2].isBomb {
 			revealArea(input1, input2)
 			CallClear()
 		} else {
@@ -74,11 +75,33 @@ func main() {
 }
 
 func revealArea(r int, c int) {
-	//TO-DO
+	grid[r][c].visible = true
+	if grid[r][c].isBomb || grid[r][c].adjBombCount > 0 {
+		return
+	}
+	//up
+	if r-1 >= 0 && !grid[r-1][c].visible {
+		revealArea(r-1, c)
+	}
+	//down
+	if r+1 < 15 && !grid[r+1][c].visible {
+
+		revealArea(r+1, c)
+	}
+	//right
+	if c+1 < 15 && !grid[r][c+1].visible {
+
+		revealArea(r, c+1)
+	}
+	//left
+	if c-1 >= 0 && !grid[r][c-1].visible {
+
+		revealArea(r, c-1)
+	}
 }
 
 func randBool() bool {
-	return rand.Int()%11 == 1
+	return rand.Int()%7 == 1
 }
 
 func addBombsToGrid() {
@@ -99,28 +122,28 @@ func addAdjbombCount(r int, c int) {
 	//for k := range bombs {
 	//	r := k[0]
 	//	c := k[1]
-	if c+1 < 15 && !grid[r][c+1].isBomb{
+	if c+1 < 15 && !grid[r][c+1].isBomb {
 		grid[r][c+1].adjBombCount++
 	}
-	if c-1 >= 0 && !grid[r][c-1].isBomb{
+	if c-1 >= 0 && !grid[r][c-1].isBomb {
 		grid[r][c-1].adjBombCount++
 	}
-	if r+1 < 15 && !grid[r+1][c].isBomb{
+	if r+1 < 15 && !grid[r+1][c].isBomb {
 		grid[r+1][c].adjBombCount++
 	}
-	if r-1 >= 0 && !grid[r-1][c].isBomb{
+	if r-1 >= 0 && !grid[r-1][c].isBomb {
 		grid[r-1][c].adjBombCount++
 	}
-	if c+1 < 15 && r+1 < 15 && !grid[r+1][c+1].isBomb{
+	if c+1 < 15 && r+1 < 15 && !grid[r+1][c+1].isBomb {
 		grid[r+1][c+1].adjBombCount++
 	}
-	if r+1 < 15 && c-1 >= 0 && !grid[r+1][c-1].isBomb{
+	if r+1 < 15 && c-1 >= 0 && !grid[r+1][c-1].isBomb {
 		grid[r+1][c-1].adjBombCount++
 	}
-	if c+1 < 15 && r-1 >= 0 && !grid[r-1][c+1].isBomb{
+	if c+1 < 15 && r-1 >= 0 && !grid[r-1][c+1].isBomb {
 		grid[r-1][c+1].adjBombCount++
 	}
-	if c-1 >= 0 && r-1 >= 0 && !grid[r-1][c-1].isBomb{
+	if c-1 >= 0 && r-1 >= 0 && !grid[r-1][c-1].isBomb {
 		grid[r-1][c-1].adjBombCount++
 	}
 	// }
@@ -128,23 +151,25 @@ func addAdjbombCount(r int, c int) {
 
 func printGrid() {
 	for row := range grid {
-		for _,colValue := range grid[row] {
-			if colValue.visible {
-				if colValue.adjBombCount > 0 {
-					greenColor.Print(colValue.adjBombCount, " ")
-				} else {
-					whiteColor.Print(0, " ")
-				}
+		for _, colValue := range grid[row] {
+			//			if colValue.visible {
+			//				if colValue.adjBombCount > 0 {
+			//					greenColor.Print(colValue.adjBombCount, " ")
+			//				} else {
+			//					whiteColor.Print(0, " ")
+			//				}
+			//			} else {
+			//				whiteColor.Print(0, " ")
+			//			}
+			if colValue.isBomb {
+				redColor.Print(0, " ")
+			} else if colValue.visible {
+				blueColor.Print(colValue.adjBombCount, " ")
+			} else if !colValue.visible {
+				greenColor.Print(colValue.adjBombCount, " ")
 			} else {
 				whiteColor.Print(0, " ")
 			}
-		//	if grid[row][c].isBomb {
-		//		redColor.Print(0, " ")
-		//	} else if grid[row][c].adjBombCount>0  {
-		//		greenColor.Print(colValue.adjBombCount, " ")
-		//	} else {
-		//		whiteColor.Print(0, " ")
-		//	}
 		}
 		fmt.Println()
 
