@@ -56,6 +56,7 @@ func main() {
 	addBombsToGrid()
 	printGrid()
 	for !gameOver {
+		greenColor.Println("Enter row and column values ( 0 <= r,c <=14 ):")
 		fmt.Scan(&input1)
 		fmt.Scan(&input2)
 		if !grid[input1][input2].isBomb {
@@ -144,9 +145,13 @@ func printGrid() {
 	for row := range grid {
 		for _, colValue := range grid[row] {
 			if colValue.visible {
-				blueColor.Print(colValue.adjBombCount, " ")
+				if colValue.adjBombCount > 0 {
+					blueColor.Print(colValue.adjBombCount, " ")
+				} else {
+					fmt.Print(" ", " ")
+				}
 			} else {
-				whiteColor.Print(0, " ")
+				whiteColor.Print("-", " ")
 			}
 		}
 		fmt.Println()
@@ -158,11 +163,15 @@ func printBombGrid() {
 	for row := range grid {
 		for _, colValue := range grid[row] {
 			if colValue.isBomb {
-				redColor.Print(0, " ")
+				redColor.Print("X", " ")
 			} else if colValue.visible {
-				blueColor.Print(colValue.adjBombCount, " ")
+				if colValue.adjBombCount > 0 {
+					blueColor.Print(colValue.adjBombCount, " ")
+				} else {
+					fmt.Print(" ", " ")
+				}
 			} else {
-				whiteColor.Print(0, " ")
+				whiteColor.Print("-", " ")
 			}
 		}
 		fmt.Println()
