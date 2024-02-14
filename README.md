@@ -25,3 +25,11 @@ This project implements a simple version of the classic Minesweeper game using G
 5. Continue until all safe cells are revealed or a bomb is encountered.
 
 Enjoy playing Minesweeper in your terminal!
+
+![image](https://github.com/icryez/minesweeper/assets/35337801/f69cb822-04cc-43c7-8c1a-3a48f728eee9)
+
+![image](https://github.com/icryez/minesweeper/assets/35337801/15a0b6d2-a5bf-4cdf-bd55-2bfdb8035711)
+
+![image](https://github.com/icryez/minesweeper/assets/35337801/65581be1-b4ee-4e80-a6b2-2e7c8a394d8e)
+
+
